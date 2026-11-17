@@ -33,6 +33,21 @@ void NhapChuoi(char *chuoi, int gioiHan) {
     XoaEnter(chuoi);
 }
 
+/* kiem tra chuoi co phai toan chu so khong (tra ve 1 neu dung) */
+int LaSo(char *chuoi) {
+    int i = 0;
+    if (chuoi[0] == '\0') {
+        return 0;
+    }
+    while (chuoi[i] != '\0') {
+        if (chuoi[i] < '0' || chuoi[i] > '9') {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
 /* dung lai man hinh, cho nguoi dung bam Enter roi moi ve menu */
 void ChoBamEnter(void) {
     printf("\nBam Enter de ve menu...");
@@ -296,10 +311,11 @@ int main(void) {
         InMenu();
         NhapChuoi(dongChon, 10);
 
-        if (dongChon[0] == '\0') {
-            chon = -1;
-        } else {
+        /* go chu hoac de trong thi coi la chon sai, khong de atoi tra ve 0 (= Thoat) */
+        if (LaSo(dongChon)) {
             chon = atoi(dongChon);
+        } else {
+            chon = -1;
         }
 
         switch (chon) {
